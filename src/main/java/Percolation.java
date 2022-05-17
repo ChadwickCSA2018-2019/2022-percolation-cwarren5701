@@ -17,34 +17,69 @@ public class Percolation {
 	private WeightedQuickUnionUF isFullUF;
 
 	public Percolation(int n) {
+		if (n <= 0) {
+			throw new IllegalArgumentException();
+		}
 		// TODO: create n-by-n grid, with all sites blocked
 		percolation = new WeightedQuickUnionUF(n * n + 2); // plus to for the top and bottom virtual sites
 		isFullUF = new WeightedQuickUnionUF(n * n + 1); // doesn't have a bottom virtual site to prevent backwash
 		grid = new boolean[n][n];
 		numOfOpenSites = 0;
 		// union the top site with the top row (percolation)
-		for (int i = 1; i <= n; i++) {
+		for (int i = 1; i <= grid.length; i++) {
 			percolation.union(0, i);
 		}
 		// union the bottom virtual site with the bottom row (percolation)
-
+		for (int i = 0; i < grid.length; i++) {
+			percolation.union(grid.length * grid.length + 2, 1 + grid.length * grid.length - i);
+		}
 		// union the top site with the top row (isFullUF)
-		for (int i = 1; i <= n; i++) {
+		for (int i = 1; i <= grid.length; i++) {
 			isFullUF.union(0, i);
 		}
 	}
-	
+
+	// idk about this
 	private int translate2DTo1D(int row, int col) {
-		// TODO: convert a 2D position to a 1D position
-		return 0;
+		// convert a 2D position to a 1D position
+		return (row * grid.length) + col + 1; // if we get rid of the bottom virtual site then there's no need to add
+												// one
 	}
 
 	public void open(int row, int col) {
-		// TODO: open site (row, col) if it is not open already
-		// open it in our grid(boolean grid, set to true)
-		grid[row][col] = true;
-		// open it in WeightedQuickUnion by union-ing it with the adjacent open sites
-		numOfOpenSites++;
+		int gridLength = grid.length;
+		if (row > gridLength || row < 1 || col > gridLength || col < 1) {
+			throw new IllegalArgumentException();
+		}
+		int gridRow = row - 1;
+		int gridCol = col - 1;
+		if (!grid[gridRow][gridCol]) {
+			numOfOpenSites++;
+			int currentPosition1D = translate2DTo1D(gridRow, gridCol);
+			// open it in our grid(boolean grid, set to true)
+			grid[gridRow][gridCol] = true;
+			// open it in WeightedQuickUnion by union-ing it with the adjacent open sites
+
+			// above
+			if (gridRow + 1 > 0) {
+				percolation.union(currentPosition1D, translate2DTo1D(gridRow + 1, gridCol));
+			}
+
+			// below
+			if (gridRow - 1 < gridLength) {
+				percolation.union(currentPosition1D, translate2DTo1D(gridRow - 1, gridCol));
+			}
+
+			// right
+			if (gridCol + 1 < gridLength) {
+				percolation.union(currentPosition1D, translate2DTo1D(gridRow, gridCol + 1));
+			}
+
+			// left
+			if (gridCol - 1 > gridLength) {
+				percolation.union(currentPosition1D, translate2DTo1D(gridRow, gridCol - 1));
+			}
+		}
 	}
 
 	public boolean isOpen(int row, int col) {
@@ -54,8 +89,8 @@ public class Percolation {
 	public boolean isFull(int row, int col) {
 		// TODO: is site (row, col) full?
 		// check to see if THIS(row, col translated to 1D array index) site is connected
-		// to the top virtual site (in isFullUF)
-		return false;
+		// to the top virtual site (in isFullUF)...why not in percolation UF???
+		return isFullUF.connected(translate2DTo1D(row - 1, col - 1), 0);
 	}
 
 	public int numberOfOpenSites() {
