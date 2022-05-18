@@ -36,5 +36,7 @@ public class PercolationStats {
 
    public static void main(String[] args) {
      // test client (described at http://coursera.cs.princeton.edu/algs4/assignments/percolation.html)
+	 System.out.println(args[0] + " " + args[1]);
+	 int n = Integer.parseInt(args[0]); // converts our first argument to an integer
    }
 }
