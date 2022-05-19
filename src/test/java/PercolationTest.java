@@ -38,7 +38,7 @@ public class PercolationTest {
 	}
 
 	@Test
-	void testOpen2() {
+	public void testOpen2() {
 		grid25.open(0, 0);
 		assertTrue(grid25.isOpen(0, 0));
 	}
