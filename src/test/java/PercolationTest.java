@@ -142,6 +142,13 @@ public class PercolationTest {
 		Percolation perc = generatePercolation(input1.getName());
 		assertTrue(input1.getName() + " should percolate", perc.percolates());
 	}
+	
+	@Test
+	public void testInput1PercolatesFalse() {
+		File input1 = new File("percolation-test-files/input1-no.txt");
+		Percolation perc = generatePercolation(input1.getName());
+		assertFalse(input1.getName() + " should not percolate", perc.percolates());
+	}
 
 	@Test
 	public void testBackwash() {

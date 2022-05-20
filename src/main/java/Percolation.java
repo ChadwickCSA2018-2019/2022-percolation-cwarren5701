@@ -20,7 +20,6 @@ public class Percolation {
 		if (n <= 0) {
 			throw new IllegalArgumentException();
 		}
-		// TODO: create n-by-n grid, with all sites blocked
 		percolationChecker = new WeightedQuickUnionUF(n * n + 2); // plus to for the top and bottom virtual sites
 		isFullChecker = new WeightedQuickUnionUF(n * n + 1); // doesn't have a bottom virtual site to prevent backwash
 		grid = new boolean[n][n];
@@ -39,7 +38,7 @@ public class Percolation {
 		}
 	}
 
-	public int convert2DTo1D(int row, int col) {
+	private int convert2DTo1D(int row, int col) {
 		// convert a 2D position to a 1D position
 		return (row * grid.length) + col + 1; // if we get rid of the bottom virtual site then there's no need to add
 												// one
@@ -100,7 +99,7 @@ public class Percolation {
 	}
 
 	public boolean percolates() {
-		return percolationChecker.connected(0, grid.length * grid.length + 1);
+		return numOfOpenSites > 0 && percolationChecker.connected(0, grid.length * grid.length + 1);
 	}
 
 	public static void main(String[] args) {

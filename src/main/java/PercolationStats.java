@@ -22,27 +22,23 @@ public class PercolationStats {
 			while (!perc.percolates()) {
 				perc.open(StdRandom.uniform(1, n + 1), StdRandom.uniform(1, n + 1));
 			}
-			trialRuns[i] = perc.numberOfOpenSites() / (n * n);
+			trialRuns[i] = (double)(perc.numberOfOpenSites()) / (n * n);
 		}
 	}
 
 	public double mean() {
-		// TODO: calculate sample mean of percolation threshold
 		return StdStats.mean(trialRuns);
 	}
 
 	public double stddev() {
-		// TODO: calculate sample standard deviation of percolation threshold
 		return StdStats.stddev(trialRuns);
 	}
 
 	public double confidenceLo() {
-		// TODO: return low endpoint of 95% confidence interval
 		return mean() - ((1.96 * stddev()) / (Math.sqrt((double) trialRuns.length)));
 	}
 
 	public double confidenceHi() {
-		// TODO: return high endpoint of 95% confidence interval
 		return mean() + ((1.96 * stddev()) / (Math.sqrt((double) trialRuns.length)));
 	}
 
