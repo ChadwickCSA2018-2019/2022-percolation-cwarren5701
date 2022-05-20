@@ -31,7 +31,7 @@ public class Percolation {
 		}
 		// union the bottom virtual site with the bottom row (percolation)
 		for (int i = 0; i < grid.length; i++) {
-			percolationChecker.union(grid.length * grid.length + 2, 1 + grid.length * grid.length - i);
+			percolationChecker.union(grid.length * grid.length + 1, grid.length * grid.length - i);
 		}
 		// union the top site with the top row (isFullUF)
 		for (int i = 1; i <= grid.length; i++) {
@@ -65,25 +65,24 @@ public class Percolation {
 		if (gridRow + 1 < grid.length && grid[gridRow + 1][gridCol]) {
 			percolationChecker.union(currentPosition1D, convert2DTo1D(gridRow + 1, gridCol));
 			isFullChecker.union(currentPosition1D, convert2DTo1D(gridRow + 1, gridCol));
-
 		}
 
 		// above
 		if (gridRow - 1 >= 0 && grid[gridRow - 1][gridCol]) {
 			percolationChecker.union(currentPosition1D, convert2DTo1D(gridRow - 1, gridCol));
-			percolationChecker.union(currentPosition1D, convert2DTo1D(gridRow - 1, gridCol));
+			isFullChecker.union(currentPosition1D, convert2DTo1D(gridRow - 1, gridCol));
 		}
 
 		// right
 		if (gridCol + 1 < grid.length && grid[gridRow][gridCol + 1]) {
 			percolationChecker.union(currentPosition1D, convert2DTo1D(gridRow, gridCol + 1));
-			percolationChecker.union(currentPosition1D, convert2DTo1D(gridRow, gridCol + 1));
+			isFullChecker.union(currentPosition1D, convert2DTo1D(gridRow, gridCol + 1));
 		}
 
 		// left
 		if (gridCol - 1 >= 0 && grid[gridRow][gridCol - 1]) {
 			percolationChecker.union(currentPosition1D, convert2DTo1D(gridRow, gridCol - 1));
-			percolationChecker.union(currentPosition1D, convert2DTo1D(gridRow, gridCol - 1));
+			isFullChecker.union(currentPosition1D, convert2DTo1D(gridRow, gridCol - 1));
 		}
 
 	}
@@ -93,7 +92,7 @@ public class Percolation {
 	}
 
 	public boolean isFull(int row, int col) {
-		return grid[row - 1][col - 1] && isFullChecker.connected(convert2DTo1D(row - 1, col - 1), 0);
+		return grid[row - 1][col - 1] && isFullChecker.connected(0, convert2DTo1D(row - 1, col - 1));
 	}
 
 	public int numberOfOpenSites() {

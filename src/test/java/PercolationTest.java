@@ -10,7 +10,7 @@ import edu.princeton.cs.algs4.In;
 public class PercolationTest {
 
 	private Percolation grid10;
-	private Percolation grid25;
+	private Percolation grid20;
 
 	@Before
 	public void setup() {
@@ -19,7 +19,7 @@ public class PercolationTest {
 
 	@Before
 	public void setup2() {
-		grid25 = new Percolation(25);
+		grid20 = new Percolation(20);
 	}
 
 	@Test
@@ -39,8 +39,8 @@ public class PercolationTest {
 
 	@Test
 	public void testOpen2() {
-		grid25.open(0, 0);
-		assertTrue(grid25.isOpen(0, 0));
+		grid20.open(1, 1);
+		assertTrue(grid20.isOpen(1, 1));
 	}
 
 	@Test
@@ -57,8 +57,8 @@ public class PercolationTest {
 
 	@Test
 	public void testNumberOfOpenSites2() {
-		grid25.open(0, 1);
-		assertEquals("Should have 2 sites open", 2, grid25.numberOfOpenSites());
+		grid20.open(1, 2);
+		assertEquals("Should have 2 sites open", 1, grid20.numberOfOpenSites());
 	}
 
 	@Test
@@ -70,9 +70,9 @@ public class PercolationTest {
 
 	@Test
 	public void testIsFull2() {
-		grid25.open(1, 1);
-		assertTrue("1,1 should translate to the top left corner and be full if it us opened", grid25.isFull(1, 1));
-		
+		grid20.open(1, 1);
+		assertTrue("1,1 should translate to the top left corner and be full if it us opened", grid20.isFull(1, 1));
+
 	}
 
 	@Test
@@ -137,14 +137,21 @@ public class PercolationTest {
 	}
 
 	@Test
+	public void testInput1Percolates() {
+		File input1 = new File("percolation-test-files/input1.txt");
+		Percolation perc = generatePercolation(input1.getName());
+		assertTrue(input1.getName() + " should percolate", perc.percolates());
+	}
+
+	@Test
 	public void testBackwash() {
 		Percolation input10 = generatePercolation("input10.txt");
 		assertFalse("Bottom left site is not connected to the top so should not be full", input10.isFull(10, 1));
 	}
-	
+
 	@Test
 	public void testBackwash2() {
-		Percolation heart25 = generatePercolation("heart25.txt");
-		assertFalse("Bottom left sites not connected to the top so shoulld not be full", heart25.isFull(25, 1));
+		Percolation input20 = generatePercolation("heart25.txt");
+		assertFalse("Bottom left sites not connected to the top so shoulld not be full", input20.isFull(20, 1));
 	}
 }

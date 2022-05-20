@@ -20,9 +20,9 @@ public class PercolationStats {
 		for (int i = 0; i < trials; i++) {
 			Percolation perc = new Percolation(n);
 			while (!perc.percolates()) {
-				perc.open(StdRandom.uniform(1, n+1), StdRandom.uniform(1, n+1));
+				perc.open(StdRandom.uniform(1, n + 1), StdRandom.uniform(1, n + 1));
 			}
-			trialRuns[i] =  perc.numberOfOpenSites() / (n*n);
+			trialRuns[i] = perc.numberOfOpenSites() / (n * n);
 		}
 	}
 
@@ -38,7 +38,7 @@ public class PercolationStats {
 
 	public double confidenceLo() {
 		// TODO: return low endpoint of 95% confidence interval
-		return mean() - (1.96 * stddev()) / (Math.sqrt((double) trialRuns.length));
+		return mean() - ((1.96 * stddev()) / (Math.sqrt((double) trialRuns.length)));
 	}
 
 	public double confidenceHi() {
@@ -55,6 +55,7 @@ public class PercolationStats {
 		PercolationStats percStats = new PercolationStats(n, trials);
 		System.out.println("mean = " + percStats.mean());
 		System.out.println("stddev = " + percStats.stddev());
-		System.out.println("95% confidence interval = [" + percStats.confidenceLo() + ", " + percStats.confidenceHi() + "]");
+		System.out.println(
+				"95% confidence interval = [" + percStats.confidenceLo() + ", " + percStats.confidenceHi() + "]");
 	}
 }
