@@ -15,6 +15,9 @@ public class PercolationStats {
 	private double[] trialRuns;
 
 	public PercolationStats(int n, int trials) {
+		if(n < 1 || trials < 1) {
+			throw new IllegalArgumentException("cannot create a 0-by-0 grid or can't have 0 trials");
+		}
 		// TODO: perform trials independent experiments on an n-by-n grid
 		// add exception for arguments
 		trialRuns = new double[trials];
