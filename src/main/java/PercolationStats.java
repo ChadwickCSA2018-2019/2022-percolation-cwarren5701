@@ -18,8 +18,6 @@ public class PercolationStats {
 		if (n < 1 || trials < 1) {
 			throw new IllegalArgumentException("cannot create a 0-by-0 grid or can't have 0 trials");
 		}
-		// TODO: perform trials independent experiments on an n-by-n grid
-		// add exception for arguments
 		trialRuns = new double[trials];
 		for (int i = 0; i < trials; i++) {
 			Percolation perc = new Percolation(n);
