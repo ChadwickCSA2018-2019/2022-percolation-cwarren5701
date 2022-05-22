@@ -10,11 +10,18 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
  *
  * Description: Modeling Percolation like a boss. woot. woot.
  ******************************************************************************/
+/**
+ * @author CarterWarren
+ *
+ *         An {@link Percolation} is a 2D grid of open or closed sites, and this
+ *         class provides methods to access and open sites. This class is used
+ *         by PercolationStats.
+ */
 public class Percolation {
-	private boolean[][] grid; // true = open & false = closed
-	private int numOfOpenSites;
-	private WeightedQuickUnionUF percolationChecker;
-	private WeightedQuickUnionUF isFullChecker;
+	private boolean[][] grid; // boolean grid: true = open; false = closed
+	private int numOfOpenSites; // number of open sites in percolation object
+	private WeightedQuickUnionUF percolationChecker; // percolation object with 2 virtual sites
+	private WeightedQuickUnionUF isFullChecker; // percolation object with 1 virtual site
 
 	public Percolation(int n) {
 		if (n <= 0) {
@@ -46,7 +53,7 @@ public class Percolation {
 
 	public void open(int row, int col) {
 		if (row > grid.length || row < 0 || col > grid.length || col < 0) {
-			throw new IllegalArgumentException("Invalid row or col index");
+			throw new IllegalArgumentException();
 		}
 		int gridRow = row - 1;
 		int gridCol = col - 1;
@@ -88,16 +95,16 @@ public class Percolation {
 
 	public boolean isOpen(int row, int col) {
 		if (row > grid.length || row < 0 || col > grid.length || col < 0) {
-			throw new IllegalArgumentException("Invalid row or col index");
+			throw new IllegalArgumentException();
 		}
 		return grid[row - 1][col - 1];
 	}
 
 	public boolean isFull(int row, int col) {
 		if (row > grid.length || row < 0 || col > grid.length || col < 0) {
-			throw new IllegalArgumentException("Invalid row or col index");
+			throw new IllegalArgumentException();
 		}
-		return grid[row - 1][col - 1] && isFullChecker.connected(0, convert2DTo1D(row - 1, col - 1));
+		return isOpen(row, col) && (isFullChecker.find(0) == isFullChecker.find(convert2DTo1D(row - 1, col - 1)));
 	}
 
 	public int numberOfOpenSites() {
@@ -105,9 +112,7 @@ public class Percolation {
 	}
 
 	public boolean percolates() {
-		return numOfOpenSites > 0 && percolationChecker.connected(0, grid.length * grid.length + 1);
-	}
-
-	public static void main(String[] args) {
+		return numOfOpenSites > 0
+				&& (percolationChecker.find(0) == percolationChecker.find(grid.length * grid.length + 1));
 	}
 }

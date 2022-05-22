@@ -142,7 +142,7 @@ public class PercolationTest {
 		Percolation perc = generatePercolation(input1.getName());
 		assertTrue(input1.getName() + " should percolate", perc.percolates());
 	}
-	
+
 	@Test
 	public void testInput1PercolatesFalse() {
 		File input1 = new File("percolation-test-files/input1-no.txt");
@@ -160,5 +160,20 @@ public class PercolationTest {
 	public void testBackwash2() {
 		Percolation input20 = generatePercolation("heart25.txt");
 		assertFalse("Bottom left sites not connected to the top so shoulld not be full", input20.isFull(20, 1));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidInput() {
+		grid10.open(-1, 1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidInput2() {
+		grid10.isOpen(-1, 1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidInput3() {
+		grid10.isFull(2, 13);
 	}
 }
