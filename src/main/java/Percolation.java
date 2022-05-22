@@ -13,7 +13,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 /**
  * @author CarterWarren
  *
- *         An {@link Percolation} is a 2D grid of open or closed sites, and this
+ *         A {@link Percolation} is a 2D grid of open or closed sites, and this
  *         class provides methods to access and open sites. This class is used
  *         by PercolationStats.
  */
@@ -23,6 +23,11 @@ public class Percolation {
 	private WeightedQuickUnionUF percolationChecker; // percolation object with 2 virtual sites
 	private WeightedQuickUnionUF isFullChecker; // percolation object with 1 virtual site
 
+	/**
+	 * Constructs a Percolation object with a n-by-n grid.
+	 * 
+	 * @param n number of rows and cols
+	 */
 	public Percolation(int n) {
 		if (n <= 0) {
 			throw new IllegalArgumentException();
@@ -45,12 +50,25 @@ public class Percolation {
 		}
 	}
 
+	/**
+	 * Converts a sites position in a 2D array to its equivalent index in a 1D
+	 * array.
+	 * 
+	 * @param row row index
+	 * @param col column index
+	 * @return 1D array index
+	 */
 	private int convert2DTo1D(int row, int col) {
 		// convert a 2D position to a 1D position
-		return (row * grid.length) + col + 1; // if we get rid of the bottom virtual site then there's no need to add
-												// one
+		return (row * grid.length) + col + 1;
 	}
 
+	/**
+	 * Opens site at given given (row,col).
+	 * 
+	 * @param row row index
+	 * @param col column index
+	 */
 	public void open(int row, int col) {
 		if (row > grid.length || row < 0 || col > grid.length || col < 0) {
 			throw new IllegalArgumentException();
@@ -93,6 +111,14 @@ public class Percolation {
 
 	}
 
+	/**
+	 * Returns <code>true</code> if the site at (row, col) is open.
+	 * 
+	 * @param row row index
+	 * @param col column index
+	 * @return <code>true</code> if the site at (row, col) is open
+	 *         <code>false</code> otherwise
+	 */
 	public boolean isOpen(int row, int col) {
 		if (row > grid.length || row < 0 || col > grid.length || col < 0) {
 			throw new IllegalArgumentException();
@@ -100,6 +126,14 @@ public class Percolation {
 		return grid[row - 1][col - 1];
 	}
 
+	/**
+	 * Returns <code>true</code> if the site is connected to the top virtual site.
+	 * 
+	 * @param row row index
+	 * @param col column index
+	 * @return <code>true</code> if the site is connected to the top virtual site
+	 *         <code>false</code> otherwise
+	 */
 	public boolean isFull(int row, int col) {
 		if (row > grid.length || row < 0 || col > grid.length || col < 0) {
 			throw new IllegalArgumentException();
@@ -107,10 +141,22 @@ public class Percolation {
 		return isOpen(row, col) && (isFullChecker.find(0) == isFullChecker.find(convert2DTo1D(row - 1, col - 1)));
 	}
 
+	/**
+	 * Returns the number of open sites.
+	 * 
+	 * @return number of open sites
+	 */
 	public int numberOfOpenSites() {
 		return numOfOpenSites;
 	}
 
+	/**
+	 * Returns <code>true</code> if the top virtual site is connected to the bottom
+	 * site virtual site.
+	 * 
+	 * @return <code>true</code> if the top virtual site is connected to the bottom
+	 *         virtual site <code>false</code> otherwise
+	 */
 	public boolean percolates() {
 		return numOfOpenSites > 0
 				&& (percolationChecker.find(0) == percolationChecker.find(grid.length * grid.length + 1));

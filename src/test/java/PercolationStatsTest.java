@@ -7,10 +7,6 @@ import org.junit.Test;
 
 import edu.princeton.cs.algs4.In;
 
-/**
- * @author CarterWarren
- *
- */
 public class PercolationStatsTest {
 
 	private PercolationStats percStats200;
@@ -26,22 +22,22 @@ public class PercolationStatsTest {
 		// anything is zero
 		assertTrue(percStats200.mean() != 0);
 	}
-	
+
 	@Test
 	public void testMean() {
 		assertEquals(percStats200.mean(), 0.59, 0.01);
 	}
-	
+
 	@Test
 	public void testStddev() {
 		assertEquals(percStats200.stddev(), 0.009, 0.005);
 	}
-	
+
 	@Test
 	public void testConfidenceLo() {
 		assertEquals(percStats200.confidenceLo(), 0.59, 0.01);
 	}
-	
+
 	@Test
 	public void testConfidenceHigh() {
 		assertEquals(percStats200.confidenceHi(), 0.59, 0.01);
