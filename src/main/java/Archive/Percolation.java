@@ -45,8 +45,8 @@ public class Percolation {
 	}
 
 	public void open(int row, int col) {
-		if (row >= grid.length || row < 0 || col >= grid.length || col < 0) {
-			throw new IllegalArgumentException("Invalid row or col index");
+		if (row > grid.length || row < 0 || col > grid.length || col < 0) {
+			throw new IllegalArgumentException();
 		}
 		int gridRow = row - 1;
 		int gridCol = col - 1;
@@ -87,16 +87,10 @@ public class Percolation {
 	}
 
 	public boolean isOpen(int row, int col) {
-		if (row >= grid.length || row < 0 || col >= grid.length || col < 0) {
-			throw new IllegalArgumentException("Invalid row or col index");
-		}
 		return grid[row - 1][col - 1];
 	}
 
 	public boolean isFull(int row, int col) {
-		if (row >= grid.length || row < 0 || col >= grid.length || col < 0) {
-			throw new IllegalArgumentException("Invalid row or col index");
-		}
 		return grid[row - 1][col - 1] && isFullChecker.connected(0, convert2DTo1D(row - 1, col - 1));
 	}
 
@@ -109,5 +103,6 @@ public class Percolation {
 	}
 
 	public static void main(String[] args) {
+		// TODO: test client (optional)
 	}
 }

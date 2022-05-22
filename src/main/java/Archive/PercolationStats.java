@@ -15,40 +15,41 @@ public class PercolationStats {
 	private double[] trialRuns;
 
 	public PercolationStats(int n, int trials) {
-		if (n < 1 || trials < 1) {
-			throw new IllegalArgumentException("cannot create a 0-by-0 grid or can't have 0 trials");
-		}
 		// TODO: perform trials independent experiments on an n-by-n grid
-		// add exception for arguments
 		trialRuns = new double[trials];
 		for (int i = 0; i < trials; i++) {
 			Percolation perc = new Percolation(n);
 			while (!perc.percolates()) {
 				perc.open(StdRandom.uniform(1, n + 1), StdRandom.uniform(1, n + 1));
 			}
-			trialRuns[i] = (double) (perc.numberOfOpenSites()) / (n * n);
+			trialRuns[i] = (double)(perc.numberOfOpenSites()) / (n * n);
 		}
 	}
 
 	public double mean() {
+		// TODO: calculate sample mean of percolation threshold
 		return StdStats.mean(trialRuns);
 	}
 
 	public double stddev() {
+		// TODO: calculate sample standard deviation of percolation threshold
 		return StdStats.stddev(trialRuns);
 	}
 
 	public double confidenceLo() {
+		// TODO: return low endpoint of 95% confidence interval
 		return mean() - ((1.96 * stddev()) / (Math.sqrt((double) trialRuns.length)));
 	}
 
 	public double confidenceHi() {
+		// TODO: return high endpoint of 95% confidence interval
 		return mean() + ((1.96 * stddev()) / (Math.sqrt((double) trialRuns.length)));
 	}
 
 	public static void main(String[] args) {
 		// test client (described at
 		// http://coursera.cs.princeton.edu/algs4/assignments/percolation.html)
+		System.out.println(args[0] + " " + args[1]);
 		int n = Integer.parseInt(args[0]); // converts our first argument to an integer
 		int trials = Integer.parseInt(args[1]);
 		PercolationStats percStats = new PercolationStats(n, trials);
